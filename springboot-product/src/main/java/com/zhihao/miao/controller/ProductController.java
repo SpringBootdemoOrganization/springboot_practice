@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zhihao.miao.bean.Product;
@@ -22,13 +23,13 @@ public class ProductController {
 	private ProductService productService;
 	
 	@PostMapping("/soa/product/add")
-	public Object add(Product product) {
+	public Object add(@RequestBody Product product) {
 		Integer res = productService.add(product);
 		return res == 1 ? new Response("200", "OK") : new Response("500", "Fail");
 	}
 	
 	@PutMapping("/soa/product/update")
-	public Object update(Product product) {
+	public Object update(@RequestBody Product product) {
 		Integer res = productService.update(product);
 		return res == 1 ? new Response("200", "OK") : new Response("500", "Fail");
 	}
