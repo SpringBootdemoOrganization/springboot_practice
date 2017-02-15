@@ -1,0 +1,84 @@
+通常提供注册中心的服务：
+zookeeper，consul，etcd,redis
+
+
+我们这边使用zk，并且使用zk的caluator框架
+
+服务注册放添加
+<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-x-discovery-server</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+这个依赖，
+
+
+服务调用方加入：
+<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-x-discovery</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+
+
+
+ *
+ *  常见的注册中心：zookeeper, consul, etcd, redis
+ * 
+ *  服务器提供方，需要在服务启动的时候，把服务的信息（ip，port）注册到注册中心（zookeeper）
+
+
+注册到zookeeper：
+
+[zk: localhost:2181(CONNECTED) 0] ls /
+[super, registry, soa, zookeeper]
+
+ [zk: localhost:2181(CONNECTED) 3] ls /soa/product
+[dcae15ef-7a8c-44de-9980-297b767f8cca]
+
+
+[zk: localhost:2181(CONNECTED) 4] get /soa/product/dcae15ef-7a8c-44de-9980-297b767f8cca
+{"name":"product","id":"dcae15ef-7a8c-44de-9980-297b767f8cca","address":"192.168.5.9","port":8080,"sslPort":null,"payload":null,"registrationTimeUTC":1487166373888,"serviceType":"DYNAMIC","uriSpec":null}
+cZxid = 0xd00000008
+ctime = Wed Feb 15 19:10:51 CST 2017
+mZxid = 0xd00000008
+mtime = Wed Feb 15 19:10:51 CST 2017
+pZxid = 0xd00000008
+cversion = 0
+dataVersion = 0
+aclVersion = 0
+ephemeralOwner = 0x15a40df2dbe0000
+dataLength = 203
+numChildren = 0
+
+
+27讲：spring应用的打包和部署
+
+把相应的jar依赖打入到响应的路径下：
+e:
+cd E:\jiagou3-spring\springboot_practice\springboot-product
+mvn clean package dependency:copy-dependencies
+
+
+java -Djava.ext.dirs=lib com.zhihao.miao.Application
+
+
+使用更专业的打包方式：
+appassembler-maven-plugin使用
+
+插件的地址：
+http://www.mojohaus.org/appassembler/
+
+mvn clean package appassembler:assemble
+
+ *  直接使用mnv打包
+ *  mvn clean package dependency:copy-dependencies
+ *  java -cp  Main
+ *   
+ *  appassembler（http://www.mojohaus.org/appassembler）插件的打包方式
+ *  mvn clean package appassembler:assemble
+ *  win 下面直接执行bat文件
+ *  linux下需要先授予可执行权限（chmod +x product），再执行
+ */
