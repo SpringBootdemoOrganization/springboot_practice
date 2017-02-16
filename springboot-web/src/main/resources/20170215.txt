@@ -82,3 +82,7 @@ mvn clean package appassembler:assemble
  *  win 下面直接执行bat文件
  *  linux下需要先授予可执行权限（chmod +x product），再执行
  */
+
+
+配置一下日志，配置一下监控
+env,health,beans,mappings
